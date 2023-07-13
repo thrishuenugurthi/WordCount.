@@ -1,0 +1,129 @@
+﻿@model IEnumerable<POC.Models.UploadModel>
+
+@{
+    ViewData["Title"] = "Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+        padding: 30px;
+    }
+
+    .container {
+        position: relative;
+        width:95%;
+        height:95%;
+        background-color: whitesmoke;
+        padding: 5%;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        perspective: 2700px;
+    }
+
+    .extra-info {
+        display: none;
+        line-height: 15px;
+        font-size: 12px;
+        position: absolute;
+        top: 0;
+        left: 50px;
+    }
+
+    .info:hover .extra-info {
+        display: block;
+    }
+
+    .info {
+        font-size: 20px;
+        padding-left: 5px;
+        width: 20px;
+        border-radius: 15px;
+    }
+
+    .wordsCount {
+        width: 100%;
+        border: 1px solid !important;
+        margin-top:20px !important;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    .row {
+        text-align: center;
+    }
+
+    th, td {
+        border: 1px solid !important;
+    }
+</style>
+
+<center><h1><u>File Upload</u></h1></center>
+<div style="margin-top:20px !important">
+    <form asp-action="Upload" enctype="multipart/form-data" asp-controller="Upload" method="post">
+        <div class="row">
+            <div>
+                <div class="col-md-3">
+                    <input type="file" name="file" id="btnFile" value="Upload" required>
+                </div>
+                <div class="col-md-1" style="float:left">
+                    <div class="info">
+                        <i class="icon-info-sign"></i>
+                        <span class="extra-info" style="background-color:black; color:whitesmoke; width:200px;height:60px; margin: 5% !important;">
+                            Only text files are accepted.please insert only text files
+                        </span>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:20px !important">
+            <input type="submit" value="Submit" class="btn btn-primary" id="submitbtn" onsubmit="return validate();">
+            <a href="https://localhost:44311/Login/Login" class="btn btn-primary button">Log out</a>
+        </div>
+    </form>
+</div>
+
+
+
+<table class="wordsCount">
+    <tr>
+        <th style="text-align:center !important">
+            @Html.DisplayNameFor(model => model.Words)
+        </th>
+        <th style="text-align:center !important">
+            @Html.DisplayNameFor(model => model.Count)
+        </th>
+    </tr>
+
+    @if (!Model.Any())
+    {
+        <tr style="text-align:center !important">
+            <td colspan="2">No records available</td>
+        </tr>
+    }
+
+    @foreach (var item in Model)
+    {
+        <tr style="border:  1px solid black !important;">
+            <td style="text-align:center !important">
+                @Html.DisplayFor(modelItem => item.Words)
+            </td>
+            <td style="text-align:center !important">
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+        </tr>
+    }
+</table>
+
